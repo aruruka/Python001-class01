@@ -1,0 +1,19 @@
+# TLDR:
+# docker-compose -f ./docker-compose-redis.yml build
+# docker-compose -f ./docker-compose-redis.yml up -d
+# docker-compose -f ./docker-compose-redis.yml logs -t --tail="300" redis
+# docker-compose -f ./docker-compose-redis.yml exec redis bash
+version: '3'
+
+services:
+  redis:
+    image: 'bitnami/redis:6.0.5-debian-10-r28'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    volumes:
+      - '/mnt/c/GoogleDrive/works/for_program_use/redis_data:/bitnami/redis/data'
+    ports:
+      - '6379:6379'
+    restart: 'no'

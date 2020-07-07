@@ -1,0 +1,29 @@
+# TLDR:
+# docker-compose -f ./docker-compose-mariadb.yml build
+# docker-compose -f ./docker-compose-mariadb.yml up -d
+# docker-compose -f ./docker-compose-mariadb.yml logs -t --tail="300" mariadb
+# docker-compose -f ./docker-compose-mariadb.yml exec mariadb bash
+version: '3'
+
+services:
+  mariadb:
+    image: 'bitnami/mariadb:10.5.4-debian-10-r4' # In public cloud
+    ports:
+      - '3306:3306'
+    volumes:
+      - '/mnt/c/GoogleDrive/works/for_program_use/mariadb_data:/bitnami/mariadb'
+      # - '/mnt/c/Users/keray/Desktop/temp/test_db-master:/mnt/c/Users/keray/Desktop/temp/test_db-master:ro'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      # - ALLOW_EMPTY_PASSWORD=yes\
+      # Notice: in docker-compose, $ is always intended to parse "variable substition".
+      # Use $$ to prevents docker-compose from interpolating a value.
+      # - ALLOW_EMPTY_PASSWORD='no'
+      # - MARIADB_ROOT_USER="root"
+      # - MARIADB_ROOT_PASSWORD='Fn&C*65A786@'
+      # - MARIADB_EXTRA_FLAGS='--max_connections=1024 --max_allowed_packet=32M'
+      ALLOW_EMPTY_PASSWORD: "no"
+      MARIADB_ROOT_USER: "root"
+      MARIADB_ROOT_PASSWORD: "<DB_PASSWORD>"
+      MARIADB_EXTRA_FLAGS: '--max_connections=1024 --max_allowed_packet=32M'
+    restart: "no"
